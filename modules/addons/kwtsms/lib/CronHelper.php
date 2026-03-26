@@ -1,4 +1,5 @@
 <?php
+
 /**
  * kwtSMS WHMCS Module — CronHelper
  *

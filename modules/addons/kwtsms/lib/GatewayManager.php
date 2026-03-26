@@ -1,4 +1,5 @@
 <?php
+
 /**
  * kwtSMS WHMCS Module — GatewayManager
  *
@@ -59,7 +60,9 @@ class GatewayManager
             // Fetch and cache sender IDs
             $senderidResult = $client->senderids();
             $senderidsCSV = '';
-            if (isset($senderidResult['result']) && $senderidResult['result'] === 'OK' && isset($senderidResult['senderids']) && is_array($senderidResult['senderids'])) {
+            $senderOk = isset($senderidResult['result']) && $senderidResult['result'] === 'OK'
+                && isset($senderidResult['senderids']) && is_array($senderidResult['senderids']);
+            if ($senderOk) {
                 $senderidsCSV = implode(',', $senderidResult['senderids']);
             }
             self::set('senderids_cache', $senderidsCSV);
@@ -73,7 +76,9 @@ class GatewayManager
             // Fetch and cache coverage prefixes
             $coverageResult = $client->coverage();
             $coverageCSV = '';
-            if (isset($coverageResult['result']) && $coverageResult['result'] === 'OK' && isset($coverageResult['prefixes']) && is_array($coverageResult['prefixes'])) {
+            $coverageOk = isset($coverageResult['result']) && $coverageResult['result'] === 'OK'
+                && isset($coverageResult['prefixes']) && is_array($coverageResult['prefixes']);
+            if ($coverageOk) {
                 $coverageCSV = implode(',', $coverageResult['prefixes']);
             }
             self::set('coverage_cache', $coverageCSV);

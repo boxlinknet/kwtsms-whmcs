@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<ruleset name="kwtSMS WHMCS">
+    <description>PSR-12 standard for kwtSMS WHMCS module library files.</description>
+
+    <!-- Paths to check -->
+    <file>lib/</file>
+    <file>kwtsms.php</file>
+    <file>hooks.php</file>
+    <file>templates/ajax/</file>
+
+    <!-- Exclude vendor -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <!-- Exclude admin templates (mixed PHP/HTML) -->
+    <exclude-pattern>templates/admin/</exclude-pattern>
+
+    <!-- PHP version -->
+    <config name="php_version" value="80200"/>
+
+    <!-- PSR-12 standard -->
+    <rule ref="PSR12"/>
+
+    <!--
+        WHMCS module entry point (kwtsms.php) intentionally mixes function declarations
+        and side-effect code (WHMCS guard check). PSR1.Files.SideEffects is expected here.
+    -->
+    <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern>kwtsms.php</exclude-pattern>
+        <exclude-pattern>hooks.php</exclude-pattern>
+    </rule>
+
+    <!-- Allow long lines for SQL/template strings -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="140"/>
+            <property name="absoluteLineLimit" value="200"/>
+        </properties>
+    </rule>
+</ruleset>

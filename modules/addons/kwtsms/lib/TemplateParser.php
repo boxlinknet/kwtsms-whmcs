@@ -1,4 +1,5 @@
 <?php
+
 /**
  * kwtSMS WHMCS Module — TemplateParser
  *
@@ -77,7 +78,8 @@ class TemplateParser
         return [
             'tpl_client_registration'    => 'Hi {firstname}, welcome to {companyname}! Your account has been created successfully.',
             'tpl_client_registration_ar' => 'مرحباً {firstname}، أهلاً بك في {companyname}! تم إنشاء حسابك بنجاح.',
-            'tpl_invoice_paid'           => 'Hi {firstname}, invoice #{invoiceid} for {invoiceamount} has been paid. Thank you, {companyname}.',
+            'tpl_invoice_paid'           =>
+                'Hi {firstname}, invoice #{invoiceid} for {invoiceamount} has been paid. Thank you, {companyname}.',
             'tpl_invoice_paid_ar'        => 'مرحباً {firstname}، تم دفع الفاتورة #{invoiceid} بمبلغ {invoiceamount}. شكراً، {companyname}.',
             'tpl_admin_new_order'        => 'New order #{orderid} placed by {fullname}. Login to review: {companyname}.',
         ];
