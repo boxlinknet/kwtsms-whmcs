@@ -1,0 +1,28 @@
+# Composer
+/modules/addons/kwtsms/vendor/
+/modules/addons/kwtsms/composer.lock
+
+# Environment
+.env
+.env.*
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Claude / AI tools
+.claude/
+CLAUDE.md
+napkin.md
+*.superpowers/
+
+# Docs (not shipped with module)
+docs/
+tests/
+docker/
+.playwright*
+
+# Logs
+*.log

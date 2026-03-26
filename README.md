@@ -1,0 +1,36 @@
+# kwtSMS WHMCS Module
+
+Free WHMCS Addon Module for sending automated A2P SMS notifications via the kwtSMS gateway (kwtsms.com).
+
+## Features
+
+- Automated SMS to clients on invoice paid and new registration
+- Admin SMS alerts on new orders
+- Gateway management: login, balance, sender ID selection, coverage sync
+- Test SMS with full pipeline and inline feedback
+- Full send logs, attempt logs (security events), debug logs
+- English and Arabic message templates with placeholder substitution
+- Kuwait market focused — Arabic critical, 70 chars/page
+
+## Requirements
+
+- WHMCS 8.12.x, 8.13.x, or 9.0.x
+- PHP 8.2 or 8.3
+- `allow_url_fopen` enabled in PHP
+- kwtSMS account at kwtsms.com
+- International phone number input enabled in WHMCS Settings
+
+## Installation
+
+1. Upload `modules/addons/kwtsms/` to your WHMCS `modules/addons/` directory
+2. In WHMCS Admin: Setup > Addon Modules > kwtSMS > Activate
+3. Click Configure, grant full admin permissions
+4. Open the kwtSMS addon, go to Settings tab
+5. Enter your kwtSMS API username and password, click Login
+6. Select your Sender ID from the dropdown
+7. Set Default Country Code (e.g. `965` for Kuwait)
+8. Toggle Gateway to On
+
+## Support
+
+support@kwtsms.com | https://kwtsms.com

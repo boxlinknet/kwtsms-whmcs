@@ -1,0 +1,19 @@
+{
+    "name": "kwtsms/kwtsms-whmcs",
+    "description": "kwtSMS WHMCS Addon Module - Automated SMS notifications via kwtsms.com",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.2",
+        "kwtsms/kwtsms-php": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "KwtSMS\\WHMCS\\": "lib/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}
