@@ -1,4 +1,4 @@
-name: CodeQL
+name: Security
 
 on:
   push:
@@ -9,19 +9,74 @@ on:
     - cron: '0 6 * * 1'
 
 jobs:
-  analyze:
-    name: CodeQL Analysis
+  php-security:
+    name: PHP Security Scan
     runs-on: ubuntu-latest
-    permissions:
-      security-events: write
     steps:
       - uses: actions/checkout@v4
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+      - uses: shivammathur/setup-php@v2
         with:
-          languages: javascript-typescript
-          queries: security-and-quality
+          php-version: '8.2'
+          tools: composer:v2
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+      - name: Install dependencies
+        working-directory: modules/addons/kwtsms
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Composer audit
+        working-directory: modules/addons/kwtsms
+        run: composer audit --format=plain
+
+      - name: Check for hardcoded credentials
+        run: |
+          echo "Scanning for hardcoded passwords, tokens, keys..."
+          if grep -rnE "(password|secret|token|api_key)\s*=\s*['\"][^'\"]+['\"]" \
+            modules/addons/kwtsms/lib/ \
+            modules/addons/kwtsms/kwtsms.php \
+            modules/addons/kwtsms/hooks.php \
+            2>/dev/null | grep -vE "(setting|parameter|field|doc|comment|\\\$)" ; then
+            echo "::warning::Possible hardcoded credentials found. Review above."
+          else
+            echo "No hardcoded credentials found. OK"
+          fi
+
+      - name: Check for dangerous PHP functions
+        run: |
+          echo "Scanning for dangerous function calls..."
+          if grep -rnE "\b(eval|exec|system|passthru|shell_exec|popen|proc_open|assert)\s*\(" \
+            modules/addons/kwtsms/lib/ \
+            modules/addons/kwtsms/kwtsms.php \
+            modules/addons/kwtsms/hooks.php \
+            modules/addons/kwtsms/templates/ \
+            2>/dev/null; then
+            echo "::error::Dangerous PHP functions found"
+            exit 1
+          fi
+          echo "No dangerous functions found. OK"
+
+      - name: Check for direct SQL (must use Capsule)
+        run: |
+          echo "Scanning for direct SQL queries..."
+          if grep -rnE "(mysql_query|mysqli_|PDO::|->query\()" \
+            modules/addons/kwtsms/lib/ \
+            modules/addons/kwtsms/kwtsms.php \
+            modules/addons/kwtsms/hooks.php \
+            2>/dev/null; then
+            echo "::error::Direct SQL found. Must use WHMCS Capsule ORM."
+            exit 1
+          fi
+          echo "All DB queries use Capsule. OK"
+
+      - name: Scan for sensitive data
+        run: |
+          if grep -rn "99220322" \
+            modules/addons/kwtsms/lib/ \
+            modules/addons/kwtsms/kwtsms.php \
+            modules/addons/kwtsms/hooks.php \
+            modules/addons/kwtsms/templates/ \
+            2>/dev/null; then
+            echo "::error::Sensitive data found in source files"
+            exit 1
+          fi
+          echo "No sensitive data found. OK"
