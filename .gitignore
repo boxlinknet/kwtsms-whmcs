@@ -20,9 +20,11 @@ napkin.md
 
 # Docs (not shipped with module)
 docs/
-tests/
 docker/
 .playwright*
+
+# PHPUnit cache
+.phpunit.cache/
 
 # Logs
 *.log
