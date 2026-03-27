@@ -10,7 +10,7 @@
 
 [kwtSMS](https://www.kwtsms.com) is a Kuwait-based A2P SMS gateway providing reliable SMS delivery across Kuwait and 200+ countries. Features include dedicated sender IDs, Arabic message support, real-time balance tracking, and a developer-friendly REST API.
 
-[Sign up for a kwtSMS account](https://www.kwtsms.com/signup.html) to get started.
+[Sign up for a kwtSMS account](https://www.kwtsms.com/account/signup/) to get started.
 
 Free WHMCS Addon Module for sending automated A2P SMS notifications via the kwtSMS gateway.
 
