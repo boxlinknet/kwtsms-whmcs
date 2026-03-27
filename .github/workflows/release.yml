@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build and release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: curl, json, mbstring, intl
+          tools: composer:v2
+
+      - name: Install production dependencies
+        working-directory: modules/addons/kwtsms
+        run: composer install --no-dev --optimize-autoloader --no-interaction
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build zip
+        env:
+          PKG_VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          zip -r "kwtsms-whmcs-${PKG_VERSION}.zip" modules/addons/kwtsms/ \
+            --exclude "*/vendor/*/test*" \
+            --exclude "*/vendor/*/tests*" \
+            --exclude "*/vendor/*/Tests*" \
+            --exclude "*/vendor/bin/*" \
+            --exclude "*/phpstan.neon" \
+            --exclude "*/phpstan-bootstrap.php" \
+            --exclude "*/phpcs.xml" \
+            --exclude "*/phpunit.xml" \
+            --exclude "*/tests/*" \
+            --exclude "*/.phpunit.cache/*" \
+            --exclude "*/composer.lock" \
+            --exclude "*/.git*"
+
+      - name: Verify zip contents
+        env:
+          PKG_VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          echo "=== Required files ==="
+          unzip -l "kwtsms-whmcs-${PKG_VERSION}.zip" | grep -q "kwtsms.php" && echo "kwtsms.php OK"
+          unzip -l "kwtsms-whmcs-${PKG_VERSION}.zip" | grep -q "hooks.php" && echo "hooks.php OK"
+          unzip -l "kwtsms-whmcs-${PKG_VERSION}.zip" | grep -q "whmcs.json" && echo "whmcs.json OK"
+          unzip -l "kwtsms-whmcs-${PKG_VERSION}.zip" | grep -q "vendor/autoload.php" && echo "vendor/autoload.php OK"
+          echo "=== No dev files ==="
+          if unzip -l "kwtsms-whmcs-${PKG_VERSION}.zip" | grep -qE "phpstan|phpcs|phpunit|/tests/"; then
+            echo "::error::Dev files found in zip"
+            exit 1
+          fi
+          echo "Clean. OK"
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: kwtsms-whmcs-${{ steps.version.outputs.VERSION }}.zip
+          generate_release_notes: true

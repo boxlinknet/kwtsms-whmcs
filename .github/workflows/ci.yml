@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.2', '8.3']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: curl, json, mbstring, intl
+          tools: composer:v2
+
+      - name: Install dependencies
+        working-directory: modules/addons/kwtsms
+        run: composer install --no-interaction --prefer-dist
+
+      - name: PHPStan
+        working-directory: modules/addons/kwtsms
+        run: vendor/bin/phpstan analyse
+
+      - name: PHPCS
+        working-directory: modules/addons/kwtsms
+        run: vendor/bin/phpcs --standard=phpcs.xml
+
+  test:
+    name: Unit Tests (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.2', '8.3']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: curl, json, mbstring, intl
+          tools: composer:v2
+
+      - name: Install dependencies
+        working-directory: modules/addons/kwtsms
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Run unit tests
+        working-directory: modules/addons/kwtsms
+        run: vendor/bin/phpunit --testsuite Unit
+
+  security-scan:
+    name: Security scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      - name: Install dependencies
+        working-directory: modules/addons/kwtsms
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Check for known vulnerabilities
+        working-directory: modules/addons/kwtsms
+        run: composer audit
+
+      - name: Scan for sensitive data
+        run: |
+          if grep -rn "99220322" modules/addons/kwtsms/lib/ modules/addons/kwtsms/kwtsms.php modules/addons/kwtsms/hooks.php modules/addons/kwtsms/templates/ 2>/dev/null; then
+            echo "::error::Sensitive data found in source files"
+            exit 1
+          fi
+          echo "No sensitive data found"
