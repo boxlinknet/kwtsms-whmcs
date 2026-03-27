@@ -10,7 +10,7 @@ Send automated SMS notifications to your WHMCS clients and admins through kwtSMS
 
 ## About kwtSMS
 
-[kwtSMS](https://www.kwtsms.com) is a Kuwait-based A2P SMS gateway providing reliable SMS delivery across Kuwait and 200+ countries. Features include dedicated sender IDs, Arabic message support, real-time balance tracking, and a developer-friendly REST API.
+[kwtSMS](https://www.kwtsms.com) is a Kuwait-based SMS gateway that delivers messages to 200+ countries. It supports dedicated sender IDs, Arabic messages, balance tracking, and a REST API built for developers.
 
 [Sign up for a kwtSMS account](https://www.kwtsms.com/account/signup/) to get started.
 
