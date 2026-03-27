@@ -42,7 +42,6 @@ class GatewayManager
     public static function login(string $username, string $password): array
     {
         try {
-            // Disable library file logging -- we handle our own logging
             $client = new KwtSMS($username, $password, 'KWT-SMS', false, '');
 
             $balance = $client->balance();

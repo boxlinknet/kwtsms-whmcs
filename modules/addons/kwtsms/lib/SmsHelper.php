@@ -214,6 +214,12 @@ class SmsHelper
      *
      * @param string[] $coveredPrefixes
      */
+    /**
+     * Check if a phone number matches any prefix in the coverage list.
+     * Sorts by length descending to match the most specific prefix first.
+     *
+     * @param string[] $coveredPrefixes
+     */
     private static function isCovered(string $phone, array $coveredPrefixes): bool
     {
         if (empty($coveredPrefixes)) {
