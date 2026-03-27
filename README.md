@@ -6,13 +6,13 @@
 [![kwtSMS API](https://img.shields.io/badge/kwtSMS-API%20v4.1-FFA200?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRleHQgeD0iNCIgeT0iMTgiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IndoaXRlIj5TTVk8L3RleHQ+PC9zdmc+)](https://www.kwtsms.com)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/boxlinknet/kwtsms-whmcs/pulls)
 
+Free WHMCS Addon Module for sending automated A2P SMS notifications via the kwtSMS gateway.
+
 ## About kwtSMS
 
 [kwtSMS](https://www.kwtsms.com) is a Kuwait-based A2P SMS gateway providing reliable SMS delivery across Kuwait and 200+ countries. Features include dedicated sender IDs, Arabic message support, real-time balance tracking, and a developer-friendly REST API.
 
 [Sign up for a kwtSMS account](https://www.kwtsms.com/account/signup/) to get started.
-
-Free WHMCS Addon Module for sending automated A2P SMS notifications via the kwtSMS gateway.
 
 ## Features
 
