@@ -1,0 +1,36 @@
+{
+    "$schema": "https://api.whmcs.com/schemas/addon/1.0/whmcs-addon.json",
+    "type": "whmcs-addons",
+    "name": "kwtSMS SMS Notifications",
+    "license": "MIT",
+    "category": "notifications",
+    "description": {
+        "name": "kwtSMS SMS Notifications",
+        "tagline": "Automated SMS notifications for WHMCS through kwtSMS",
+        "long": "Send automated SMS notifications to your WHMCS clients and admins through the kwtSMS gateway. Supports invoice paid, client registration, new order alerts, Arabic messages, test mode, full SMS logs, and gateway management.",
+        "features": [
+            "Automated SMS on invoice paid and new registration",
+            "Admin SMS alerts on new orders",
+            "Gateway login, balance tracking, sender ID selection",
+            "Test SMS with inline feedback",
+            "Full SMS logs, security logs, debug logs",
+            "English and Arabic message templates",
+            "Test mode for safe development"
+        ]
+    },
+    "logo": {
+        "filename": "logo.png"
+    },
+    "support": {
+        "homepage": "https://www.kwtsms.com",
+        "learn_more": "https://www.kwtsms.com/integrations.html",
+        "email": "support@kwtsms.com",
+        "docs_url": "https://www.kwtsms.com/api/"
+    },
+    "authors": [
+        {
+            "name": "kwtSMS",
+            "homepage": "https://www.kwtsms.com"
+        }
+    ]
+}
