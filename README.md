@@ -45,4 +45,4 @@ Free WHMCS Addon Module for sending automated A2P SMS notifications via the kwtS
 
 ## Support
 
-support@kwtsms.com | [www.kwtsms.com](https://www.kwtsms.com)
+[www.kwtsms.com/support](https://www.kwtsms.com/support.html)
